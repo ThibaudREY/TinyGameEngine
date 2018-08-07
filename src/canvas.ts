@@ -4,10 +4,12 @@ export class Canvas {
 
     canvas: HTMLCanvasElement;
 
-    init() {
-        this.canvas = new HTMLCanvasElement();
+    init(): Canvas {
+        this.canvas = <HTMLCanvasElement>(document.createElement("canvas"));
         this.canvas.setAttribute("id", "TinyGameEngineCanvas");
-        document.body.insertAdjacentElement("afterbegin", this.canvas);
+        document.body.appendChild(this.canvas);
+
+        return this;
     }
 
     fullScreen() {

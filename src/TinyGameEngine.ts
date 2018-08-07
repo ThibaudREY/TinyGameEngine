@@ -5,7 +5,7 @@ export class TinyGameEngine {
 
     init() {
         this.canvas = new Canvas();
-        this.canvas.fullScreen();
+        this.canvas.init().fullScreen();
     }
 }
 
