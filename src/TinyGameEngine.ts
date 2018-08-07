@@ -2,11 +2,13 @@ import { Canvas } from "./canvas";
 import { Config } from "./Util/config";
 import { Scene } from "./Scene";
 import { EngineObject } from "./object";
+import { Physics } from "./physics";
 
 export class TinyGameEngine {
-    canvas: Canvas;
-    currentScene: Scene;
-    // physics: Physics;
+    private canvas: Canvas;
+    private currentFrame: Scene;
+    private nextFrame: Scene;
+    private physics: Physics = new Physics();
 
     init() {
         this.canvas = new Canvas();
@@ -16,19 +18,38 @@ export class TinyGameEngine {
         ground.height = 100;
         ground.width = this.canvas.width();
         ground.x = 0;
-        ground.y = window.innerHeight - 100;
+        ground.y = this.canvas.height() - ground.height;
         ground.skin = "../assets/ground.png";
+        ground.vx = 0;
+        ground.vy = 0;
+        ground.cx = 0;
+        ground.cy = 0;
+        ground.updateHash();
 
-        this.currentScene = new Scene();
-        this.currentScene.elements.push(ground);
+        let block = new  EngineObject();
+        block.height = 10;
+        block.width = 10;
+        block.x = 60;
+        block.y = 30;
+        block.skin = "../assets/ground.png";
+        block.vx = 20;
+        block.vy = 10;
+        block.cx = 1;
+        block.cy = 0;
+        block.updateHash();
+
+        this.currentFrame = new Scene();
+        this.currentFrame.elements.push(block);
+        this.currentFrame.elements.push(ground);
 
         this.start();
     }
 
     start() {
         setInterval(() => {
-            // this.currentScene = this.physics.process(this.currentScene);
-            this.canvas.render(this.currentScene);
+            this.nextFrame = this.physics.process(this.currentFrame);
+            this.canvas.render(this.currentFrame, this.nextFrame);
+            this.currentFrame = this.nextFrame;
         }, 1000 / Config.framerate);
     }
 }

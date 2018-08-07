@@ -1,11 +1,14 @@
-import { window } from "./Util/window";
-import { Scene } from "./Scene";
+import {window} from "./Util/window";
+import {Scene} from "./Scene";
 import {EngineObject} from "./object";
 
 export class Canvas {
 
-    canvas: HTMLCanvasElement;
+    private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
+    private drawn: boolean = false;
+    private rendered: EngineObject[] = [];
+
 
     init(): Canvas {
         this.canvas = <HTMLCanvasElement>(document.createElement("canvas"));
@@ -22,13 +25,12 @@ export class Canvas {
         this.canvas.height = window.innerHeight;
     }
 
-    // TODO: Pass current AND next frame to move instead of redrawing
-    // TODO: redraw only if object moved
-    render(scene: Scene) {
-        scene.elements.forEach(element => {
+    render(current: Scene, next: Scene) {
+        this.getChanges(current, next, (element: EngineObject) => {
             this.draw(element);
         });
     }
+
 
     private draw(element: EngineObject) {
 
@@ -36,13 +38,32 @@ export class Canvas {
         img.setAttribute("src", element.skin);
         img.setAttribute("style", `height:${element.height}px;width:${element.width}px;`);
         document.body.appendChild(img);
+        img.onload = () => {
+            this.context.drawImage(img, element.x, element.y, element.width, element.height);
+            img.remove();
+        };
 
-        this.context.drawImage(img, element.x, element.y, element.width, element.height);
-        img.remove();
     }
 
     width(): number {
         return this.canvas.width;
     }
 
+    private getChanges(current: Scene, next: Scene, callback: any) {
+        current.elements.forEach((current, key) => {
+            if (this.rendered.every(o => !EngineObject.equals(o, current))) {
+                callback(current);
+                this.rendered.push(current);
+            } else if (
+                current.x !== next.elements[key].x ||
+                current.y !== next.elements[key].y
+            ) {
+                callback(current);
+            }
+        });
+    }
+
+    height(): number {
+        return this.canvas.height;
+    }
 }
