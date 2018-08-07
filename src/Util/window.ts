@@ -1,4 +1,4 @@
-export interface Window {
+export interface window {
     innerWidth: number;
     innerHeight: number;
 }

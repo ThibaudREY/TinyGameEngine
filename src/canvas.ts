@@ -1,4 +1,4 @@
-import { Window } from 'Util/window';
+import { window } from "./Util/window";
 
 export class Canvas {
 
@@ -6,12 +6,12 @@ export class Canvas {
 
     init() {
         this.canvas = new HTMLCanvasElement();
-        this.canvas.setAttribute('id', 'TinyGameEngineCanvas')
-        document.body.insertAdjacentElement('afterbegin', this.canvas);
+        this.canvas.setAttribute("id", "TinyGameEngineCanvas");
+        document.body.insertAdjacentElement("afterbegin", this.canvas);
     }
 
     fullScreen() {
-        this.canvas.width = Window.innerWidth;
-        this.canvas.height = Window.innerHeight;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
     }
 }
