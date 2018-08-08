@@ -27,6 +27,7 @@ export class Canvas {
 
     render(current: Scene, next: Scene) {
         this.getChanges(current, next, (element: EngineObject) => {
+            // TODO: clearRect on accelerated element and force redrawing on fixed element if a cleared area belongs to them
             this.draw(element);
         });
     }

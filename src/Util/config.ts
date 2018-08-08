@@ -1,3 +1,3 @@
 export const Config = {
-    framerate: 24
+    framerate: 60
 };

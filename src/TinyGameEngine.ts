@@ -30,12 +30,12 @@ export class TinyGameEngine {
         block.height = 10;
         block.width = 10;
         block.x = 60;
-        block.y = 30;
-        block.skin = "../assets/ground.png";
-        block.vx = 20;
-        block.vy = 10;
-        block.cx = 1;
-        block.cy = 0;
+        block.y = 400;
+        block.skin = "../assets/block.png";
+        block.vx = 5;
+        block.vy = 5;
+        block.cx = 0.01;
+        block.cy = -2;
         block.updateHash();
 
         this.currentFrame = new Scene();
