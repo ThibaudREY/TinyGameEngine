@@ -19,17 +19,19 @@ export class Physics {
             o.skin = element.skin;
             o.vx = element.vx;
             o.vy = element.vy;
+            o.ix = element.ix;
+            o.iy = element.iy;
 
             this.collision(element, scene, (direction: string) => {
                 // Colision
                 if (direction === "y") {
                     o.vy = element.vy - o.cy;
-                    o.vx = -element.vx + o.cx;
+                    o.vx = -element.vx * 0.65 + o.cx;
                 }
 
                 if (direction === "x") {
                     o.vx = element.vx - o.cx;
-                    o.vy = -element.vy + o.cy;
+                    o.vy = -element.vy * 0.65 + o.cy;
                 }
 
                 // TODO: Find which side has a hit a make a rebound
@@ -38,8 +40,13 @@ export class Physics {
             o.vx = o.vx - o.cx;
             o.vy = o.vy - o.cy;
 
-            o.x = element.x + o.vx;
-            o.y = element.y + o.vy;
+            o.ix = o.ix - o.cx;
+            o.iy = o.iy - o.cy;
+
+            o.ix > 0 ? o.x = element.x + o.vx : o.x = element.x;
+            o.iy > 0 ? o.y = element.y + o.vy : o.y = element.y;
+
+
             res.elements.push(o);
         });
 

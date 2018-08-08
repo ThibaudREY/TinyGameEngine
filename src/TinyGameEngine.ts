@@ -29,13 +29,15 @@ export class TinyGameEngine {
         let block = new  EngineObject();
         block.height = 10;
         block.width = 10;
-        block.x = 60;
-        block.y = 400;
+        block.x = 30;
+        block.y = 300;
         block.skin = "../assets/block.png";
-        block.vx = 5;
-        block.vy = 5;
+        block.vx = 3;
+        block.vy = -5;
         block.cx = 0.01;
-        block.cy = -2;
+        block.cy = -1;
+        block.ix = 1;
+        block.iy = 10;
         block.updateHash();
 
         this.currentFrame = new Scene();
