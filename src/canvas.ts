@@ -28,11 +28,19 @@ export class Canvas {
 
     render(current: Scene, next: Scene) {
         this.getChanges(current, next, (element: EngineObject) => {
-            this.changed.forEach(c => {
-                this.context.clearRect(c[0].x, c[0].y, (c[1].x + c[1].width) - c[0].x, (c[1].y + c[1].height) - c[0].y);
-            });
             // TODO: clearRect on accelerated element and force redrawing on fixed element if a cleared area belongs to them
             this.draw(element);
+            this.changed.forEach(c => {
+                if (c[0].x <=  c[1].x && c[0].y <= c[1].y) {
+                    this.context.clearRect(c[0].x, c[0].y, (c[1].x + c[1].width) - c[0].x, (c[1].y + c[1].height) - c[0].y);
+                } else if (c[0].x <  c[1].x  && c[0].y > c[1].y) {
+                    this.context.clearRect(c[0].x, c[0].y + c[0].height, (c[1].x + c[1].width) - c[0].x, c[1].y - (c[0].y + c[0].height));
+                } else if (c[0].x > c[1].x && c[0].y > c[1].y) {
+                    this.context.clearRect(c[1].x, c[1].y, (c[0].x + c[0].width) - c[1].x, (c[0].y + c[0].height) - c[1].y);
+                } else if (c[0].x > c[1].x  && c[0].y < c[1].y) {
+                    this.context.clearRect(c[1].x, c[1].y + c[1].height, (c[0].x + c[0].width) - c[1].x, c[0].y - (c[1].y + c[1].height));
+                }
+            });
         });
     }
 
