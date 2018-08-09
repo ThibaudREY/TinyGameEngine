@@ -1,4 +1,4 @@
-interface Map
+interface SimpleMap
 {
     [key: string]: any;
 }

@@ -1,14 +1,17 @@
-import { Canvas } from "./canvas";
-import { Config } from "./Util/config";
-import { Scene } from "./Scene";
-import { EngineObject } from "./object";
-import { Physics } from "./physics";
+import {Canvas} from "./canvas";
+import {Config} from "./Util/config";
+import {Scene} from "./Scene";
+import {EngineObject} from "./object";
+import {Physics} from "./physics";
+import {Controls} from "./controls";
+import {Jumper} from "./jumper";
 
 export class TinyGameEngine {
     private canvas: Canvas;
     private currentFrame: Scene;
     private nextFrame: Scene;
     private physics: Physics = new Physics();
+    private controls: Controls = new Controls();
 
     init() {
         this.canvas = new Canvas();
@@ -26,22 +29,44 @@ export class TinyGameEngine {
         ground.cy = 0;
         ground.updateHash();
 
-        let block = new  EngineObject();
-        block.height = 10;
-        block.width = 10;
-        block.x = 30;
-        block.y = 300;
-        block.skin = "../assets/block.png";
-        block.vx = 5;
-        block.vy = -5;
-        block.cx = 0.01;
-        block.cy = -1;
-        block.ix = 1;
-        block.iy = 10;
-        block.updateHash();
+        let block1 = new Jumper();
+        block1.height = 10;
+        block1.width = 10;
+        block1.x = 30;
+        block1.y = 300;
+        block1.skin = "../assets/block1.png";
+        block1.vx = 5;
+        block1.vy = -5;
+        block1.cx = 0.01;
+        block1.cy = -1;
+        block1.ix = 1;
+        block1.iy = 10;
+        block1.updateHash();
+
+        let block2 = new Jumper();
+        block2.height = 40;
+        block2.width = 40;
+        block2.x = 1000;
+        block2.y = 300;
+        block2.skin = "../assets/block2.png";
+        block2.vx = -5;
+        block2.vy = -5;
+        block2.cx = 0.01;
+        block2.cy = -1;
+        block2.ix = 1;
+        block2.iy = 10;
+        block2.updateHash();
+
+
+
+        this.controls.addAction("Space", () => {
+            // <Jumper>this.currentFrame.elements.find(o => o.hash === block.hash).jump();
+        });
+        this.controls.start();
 
         this.currentFrame = new Scene();
-        this.currentFrame.elements.push(block);
+        this.currentFrame.elements.push(block1);
+        this.currentFrame.elements.push(block2);
         this.currentFrame.elements.push(ground);
 
         this.start();
@@ -55,4 +80,3 @@ export class TinyGameEngine {
         }, 1000 / Config.framerate);
     }
 }
-
