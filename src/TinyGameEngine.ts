@@ -32,7 +32,7 @@ export class TinyGameEngine {
         block.x = 30;
         block.y = 300;
         block.skin = "../assets/block.png";
-        block.vx = 3;
+        block.vx = 5;
         block.vy = -5;
         block.cx = 0.01;
         block.cy = -1;

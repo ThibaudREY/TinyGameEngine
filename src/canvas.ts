@@ -8,6 +8,7 @@ export class Canvas {
     private context: CanvasRenderingContext2D;
     private drawn: boolean = false;
     private rendered: EngineObject[] = [];
+    private changed: EngineObject[][] = [];
 
 
     init(): Canvas {
@@ -27,6 +28,9 @@ export class Canvas {
 
     render(current: Scene, next: Scene) {
         this.getChanges(current, next, (element: EngineObject) => {
+            this.changed.forEach(c => {
+                this.context.clearRect(c[0].x, c[0].y, (c[1].x + c[1].width) - c[0].x, (c[1].y + c[1].height) - c[0].y);
+            });
             // TODO: clearRect on accelerated element and force redrawing on fixed element if a cleared area belongs to them
             this.draw(element);
         });
@@ -59,6 +63,7 @@ export class Canvas {
                 current.x !== next.elements[key].x ||
                 current.y !== next.elements[key].y
             ) {
+                this.changed.push([current, next.elements[key]]);
                 callback(current);
             }
         });
