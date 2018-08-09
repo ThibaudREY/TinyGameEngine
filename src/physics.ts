@@ -1,5 +1,5 @@
-import {Scene} from "./Scene";
-import {EngineObject} from "./object";
+import { Scene } from "./scene";
+import { EngineObject } from "./object";
 
 export class Physics {
 
@@ -82,8 +82,25 @@ export class Physics {
                     element.y <= e.y + e.height &&
                     element.height + element.y >= e.y) {
 
-                    // TODO: Find a way to get the collision direction
-                    collisionCallback("x");
+                    // collision
+                    // now detect where is the collision
+                    if (element.y <= e.y - (e.height / 2)) {
+                        // below
+                        collisionCallback("y");
+                    }
+                    if (element.y >= e.y + (e.height / 2)) {
+                        // above
+                        collisionCallback("y");
+                    }
+                    if (element.x < e.x) {
+                        // left
+                        collisionCallback("x");
+                    }
+                    if (element.x > e.x) {
+                        // right
+                        collisionCallback("x");
+                    }
+
                 }
             }
         });

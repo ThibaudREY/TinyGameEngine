@@ -1,5 +1,5 @@
 import {window} from "./Util/window";
-import {Scene} from "./Scene";
+import {Scene} from "./scene";
 import {EngineObject} from "./object";
 
 export class Canvas {

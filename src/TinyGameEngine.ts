@@ -1,10 +1,10 @@
 import {Canvas} from "./canvas";
 import {Config} from "./Util/config";
-import {Scene} from "./Scene";
+import {Scene} from "./scene";
 import {EngineObject} from "./object";
 import {Physics} from "./physics";
 import {Controls} from "./controls";
-import {Jumper} from "./jumper";
+import {MovingOject} from "./movingObject";
 
 export class TinyGameEngine {
     private canvas: Canvas;
@@ -29,7 +29,7 @@ export class TinyGameEngine {
         ground.cy = 0;
         ground.updateHash();
 
-        let block1 = new Jumper();
+        let block1 = new MovingOject();
         block1.height = 10;
         block1.width = 10;
         block1.x = 30;
@@ -43,7 +43,7 @@ export class TinyGameEngine {
         block1.iy = 10;
         block1.updateHash();
 
-        let block2 = new Jumper();
+        let block2 = new MovingOject();
         block2.height = 40;
         block2.width = 40;
         block2.x = 1000;
