@@ -1,4 +1,4 @@
-import {window} from "./Util/window";
+import {window} from "./utils/window";
 import {Scene} from "./scene";
 import {EngineObject} from "./object";
 

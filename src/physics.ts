@@ -1,5 +1,6 @@
 import { Scene } from "./scene";
 import { EngineObject } from "./object";
+import { Config } from "./utils/config";
 
 export class Physics {
 
@@ -43,6 +44,9 @@ export class Physics {
                 }
 
             });
+
+            // apply gravity
+            o.vy += Config.gravity;
 
             // Removing friction coefficient from speed
             o.vx = o.vx - o.cx;

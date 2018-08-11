@@ -1,10 +1,10 @@
 import {Canvas} from "./canvas";
-import {Config} from "./Util/config";
+import {Config} from "./utils/config";
 import {Scene} from "./scene";
 import {EngineObject} from "./object";
 import {Physics} from "./physics";
 import {Controls} from "./controls";
-import {MovingOject} from "./movingObject";
+import {MovingObject} from "./movingObject";
 
 export class TinyGameEngine {
     private canvas: Canvas;
@@ -29,11 +29,13 @@ export class TinyGameEngine {
         ground.cy = 0;
         ground.updateHash();
 
-        let block1 = new MovingOject();
+        let block1 = new MovingObject();
         block1.height = 10;
         block1.width = 10;
         block1.x = 30;
         block1.y = 300;
+        block1.onGround = true;
+        block1.jumpBoost = 10;
         block1.skin = "../assets/block1.png";
         block1.vx = 5;
         block1.vy = -5;
@@ -43,7 +45,7 @@ export class TinyGameEngine {
         block1.iy = 10;
         block1.updateHash();
 
-        let block2 = new MovingOject();
+        let block2 = new MovingObject();
         block2.height = 40;
         block2.width = 40;
         block2.x = 1000;
@@ -57,12 +59,13 @@ export class TinyGameEngine {
         block2.iy = 10;
         block2.updateHash();
 
+        // test
+        document.addEventListener("onmousedown",    block1.jump,    false);
 
-
-        this.controls.addAction("Space", () => {
+        /**this.controls.addAction("Space", () => {
             // <Jumper>this.currentFrame.elements.find(o => o.hash === block.hash).jump();
         });
-        this.controls.start();
+        this.controls.start();*/
 
         this.currentFrame = new Scene();
         this.currentFrame.elements.push(block1);

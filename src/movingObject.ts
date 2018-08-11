@@ -1,8 +1,26 @@
 import {EngineObject} from "./object";
-import { Config } from "./Util/config";
+import { Config } from "./utils/config";
 
-export class MovingOject extends  EngineObject {
+export class MovingObject extends  EngineObject {
 
+    onGround: boolean;
+    jumpBoost: number;
+
+    constructor() {
+        super();
+    }
+
+    /**
+     * simple method to jump
+     * apply a boost by changing vertical velocity
+     */
+    jump() {
+        // jump only if the object touch the ground
+        if (this.onGround) {
+            // apply boost
+            this.vy = -this.jumpBoost;
+        }
+    }
 
     /**
      * move to the left
